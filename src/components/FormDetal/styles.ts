@@ -37,12 +37,10 @@ export const TableBottom = styled.button`
 type Props = {
 	background: string;
 };
-export const TableTdPer = styled.p<Props>`
-	${({ background }) =>
-		background &&
-		`
-    background: ${background};
-	`}
+export const TableTdPer = styled.p.attrs((props: Props) => ({
+	background: props.background,
+}))<Props>`
+	background-color: ${(props) => props.background};
 	padding: 8px 13px;
 	width: fit-content;
 	border-radius: 5px;

@@ -29,7 +29,7 @@ function FormDetails({ list, setList }: Props) {
                 <C.TableBody>
                     {list.map((item, index) => (
                         <C.TableColumn key={index}>
-                            <C.TableTd key={index}>
+                            <C.TableTd>
                                 <C.TableTdPer background={item.backgroundDescription}>{item.description}</C.TableTdPer>
                             </C.TableTd>
 
