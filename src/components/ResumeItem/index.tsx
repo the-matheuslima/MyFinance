@@ -1,8 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
-import { IconBaseProps, IconType } from "react-icons";
-import { IconContext } from "react-icons/lib";
-import { GoBook } from "react-icons/go";
-import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp, FaDollarSign } from 'react-icons/fa';
+import React, { ReactElement } from "react";
 
 import * as C from "./style"
 

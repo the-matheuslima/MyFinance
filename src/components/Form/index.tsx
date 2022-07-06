@@ -1,19 +1,16 @@
 import * as C from "./styles"
 import FormDetal from "../FormDetal";
-import { List } from "../types/item"
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { ListContext } from "../../context/ListContext";
 
-type Props = {
-    list: List[],
-    setList: Dispatch<SetStateAction<List[]>>
-}
+function Form() {
+    const { handleAdd } = useContext(ListContext);
 
-function Form({ list, setList }: Props) {
     const [inputDescription, setInputDescription] = useState("")
     const [inputValue, setInputValue] = useState(0)
-    const [inputRadioTye, setInputRadioTye] = useState("")
+    const [inputRadioType, setInputRadioType] = useState("")
     const [color, setColor] = useState("#ffffff")
-
+    const [inputDate, setInputDate] = useState("")
 
     const HandleInputDescription = (event: React.ChangeEvent<HTMLInputElement>) => {
         const enteredName = event.target.value;
@@ -26,21 +23,16 @@ function Form({ list, setList }: Props) {
     };
 
     const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputRadioTye(e.target.id)
-    }
+        setInputRadioType(e.target.id)
+    };
 
     const handleColorInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         setColor(e.target.value)
-    }
+    };
 
-    const handleAdd = (event: React.MouseEvent<Element, MouseEvent>) => {
-        event.preventDefault();
-        if (inputDescription !== "" && inputRadioTye !== "" && inputValue >= 0) {
-            setList([...list, { description: inputDescription, backgroundDescription: color, value: inputValue, type: inputRadioTye, id: Math.floor(Math.random() * 1000) }])
-        } else {
-            alert("Preencha as Informações necessarias")
-        }
-    }
+    const handleInputDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputDate(e.target.value);
+    };
 
     return (
         <>
@@ -63,6 +55,13 @@ function Form({ list, setList }: Props) {
                 </C.Fields>
 
                 <C.Fields>
+                    <C.FieldsBoxInput>
+                        <C.FieldsLabel htmlFor="date">data</C.FieldsLabel>
+                        <C.FieldsInput type="date" name="date" id="date" onChange={handleInputDate} />
+                    </C.FieldsBoxInput>
+                </C.Fields>
+
+                <C.Fields>
                     <C.FieldsRadio>
                         <C.FieldsLabel htmlFor="entrada">Entrada</C.FieldsLabel>
                         <C.FieldsInputRadio type="radio" name="option" id="entrada" onChange={onValueChange} />
@@ -70,16 +69,16 @@ function Form({ list, setList }: Props) {
 
                     <C.FieldsRadio>
                         <C.FieldsLabel htmlFor="saida">saida</C.FieldsLabel>
-                        <input type="radio" name="option" id="saida" onChange={onValueChange} />
+                        <C.FieldsInputRadio type="radio" name="option" id="saida" onChange={onValueChange} />
                     </C.FieldsRadio>
                 </C.Fields>
 
                 <C.Fields>
-                    <C.Button onClick={(event) => handleAdd(event)}>Adicionar</C.Button>
+                    <C.Button onClick={(event) => handleAdd(event, inputDescription, color, inputValue, inputDate, inputRadioType)}>Adicionar</C.Button>
                 </C.Fields>
 
             </C.Form>
-            <FormDetal list={list} setList={setList} />
+            <FormDetal />
         </>
     );
 }

@@ -1,18 +1,10 @@
-import React, { Dispatch, SetStateAction } from "react";
-import { List } from "../types/item"
+import React, { Dispatch, SetStateAction, useContext, useState } from "react";
 import * as C from "./styles"
-import { FaTrash } from "react-icons/fa"
-import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp } from 'react-icons/fa';
+import { FaRegArrowAltCircleDown, FaRegArrowAltCircleUp, FaTrash } from 'react-icons/fa';
+import { ListContext } from "../../context/ListContext";
 
-type Props = {
-    list: List[]
-    setList: Dispatch<SetStateAction<List[]>>
-}
-
-function FormDetails({ list, setList }: Props) {
-    const handleDelete = (id: number) => {
-        setList(list.filter((el) => el.id !== id));
-    }
+function FormDetails() {
+    const { list, handleDelete } = useContext(ListContext)
 
     return (
         <>
@@ -22,6 +14,7 @@ function FormDetails({ list, setList }: Props) {
                         <C.TableHeadColumn>Descrição</C.TableHeadColumn>
                         <C.TableHeadColumn>Valor</C.TableHeadColumn>
                         <C.TableHeadColumn>Tipo</C.TableHeadColumn>
+                        <C.TableHeadColumn>Data</C.TableHeadColumn>
                         <C.TableHeadColumn></C.TableHeadColumn>
                     </tr>
                 </C.TableHead>
@@ -30,7 +23,9 @@ function FormDetails({ list, setList }: Props) {
                     {list.map((item, index) => (
                         <C.TableColumn key={index}>
                             <C.TableTd>
-                                <C.TableTdPer background={item.backgroundDescription}>{item.description}</C.TableTdPer>
+                                <C.TableTdPer background={item.backgroundDescription}>
+                                    {item.description}
+                                </C.TableTdPer>
                             </C.TableTd>
 
                             <C.TableTd>
@@ -39,6 +34,9 @@ function FormDetails({ list, setList }: Props) {
 
                             <C.TableTd>
                                 {item.type === "entrada" ? <FaRegArrowAltCircleUp /> : <FaRegArrowAltCircleDown />}
+                            </C.TableTd>
+                            <C.TableTd>
+                                {item.date}
                             </C.TableTd>
 
                             <C.TableTd>
